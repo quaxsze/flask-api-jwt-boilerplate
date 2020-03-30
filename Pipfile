@@ -7,10 +7,12 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-jwt = "*"
 flask-migrate = "*"
 flask-bcrypt = "*"
 python-dotenv = "*"
+marshmallow = "*"
+install = "*"
+pyjwt = "*"
 
 [requires]
 python_version = "3.7"

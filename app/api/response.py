@@ -3,9 +3,9 @@ from werkzeug.http import HTTP_STATUS_CODES
 
 
 def json_response(status_code, message=None):
-    payload = {'status_code': HTTP_STATUS_CODES.get(status_code, 'Unknown')}
+    payload = {'status_code': status_code}
     if message:
-        payload['message'] = message
+        payload['data'] = message
     response = jsonify(payload)
     response.status_code = status_code
     return response

@@ -14,21 +14,17 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
-    first_name = db.Column(db.String(128), nullable=False)
-    last_name = db.Column(db.String(128), nullable=False)
+    name = db.Column(db.String(255), unique=True, nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
-    admin = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __init__(self, email, first_name, last_name, password, admin=False):
+    def __init__(self, email, name, password):
         self.email = email
-        self.first_name = first_name
-        self.last_name = last_name
+        self.name = name
         self.registered_on = datetime.datetime.now()
-        self.admin = admin
         self.set_password(password)
     
     def __repr__(self):
-        return f"<User {self.id} {self.first_name} {self.last_name} {self.email}>"
+        return f"<User {self.id} {self.name} {self.email}>"
 
     def set_password(self, password):
         self.password = bcrypt.generate_password_hash(
@@ -37,16 +33,6 @@ class User(db.Model):
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password, password)
-    
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'email': self.email,
-            'first_name': self.first_name,
-            'last_name': self.last_name,
-            'admin': self.admin,
-            'registered_on': self.registered_on
-            }
 
     def encode_auth_token(self, user_id):
         """
